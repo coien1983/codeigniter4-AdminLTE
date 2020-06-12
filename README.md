@@ -62,4 +62,4 @@ location / {
 本项目采用大量的开源代码，包括CodeIgniter4，AdminLTE等等。
 部分代码可能署名已被某些前辈去掉，我也没来得及去查找具体的作者。
 在此，对所有用到的开源代码作者表示由衷的感谢。
-关于CodeIgniter4,请移步至https://codeigniter.org.cn/，可以查看中文文档。
+关于CodeIgniter4,中文文档请移步至https://codeigniter.org.cn/
