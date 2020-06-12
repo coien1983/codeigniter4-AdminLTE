@@ -8,5 +8,7 @@ class BaseService
     {
         helper('cookie');
         helper('session');
+        helper('text');
+        helper("url");
     }
 }

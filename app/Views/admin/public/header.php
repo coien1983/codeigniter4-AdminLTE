@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="/assets/plugins/bootstrap-switch/css/bootstrap-switch.min.css">
     <link href="/assets/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/plugins/layer/theme/default/layer.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/plugins/fileinput/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
 <!--    js加载，有一些预加载的数据需要js组件，只能放在头部-->
     <script src="/assets/jquery/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
@@ -58,6 +59,9 @@
     <script src="/assets/plugins/bootstrap-number/bootstrap-number.min.js"></script>
     <script src="/assets/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
     <script src="/assets/plugins/layer/layer.js" type="text/javascript"></script>
+    <script src="/assets/plugins/fileinput/js/plugins/piexif.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/fileinput/js/fileinput.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/fileinput/js/locales/zh.min.js" type="text/javascript"></script>
     <?php if ($mobile === FALSE): ?>
         <!--[if lt IE 9]>
             <script src="/assets/html5shiv/html5shiv.min.js"></script>

@@ -171,7 +171,7 @@
                 menu_url:menu_url,
                 is_display:is_display,
                 sort_id:sort_id,
-                menu_id:0,
+                menu_id:0
             },
             dataType:"JSON",
             success:function(data){

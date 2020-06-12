@@ -95,4 +95,17 @@ class AdminModel extends BaseModel
         return $roles;
     }
 
+    /**
+     * @title 获取系统配置
+     * @return array
+     */
+    public function adminSetting()
+    {
+        $db = \Config\Database::connect();
+        $query = $db->table("admin_setting")->get();
+        $data = $query->getResultArray();
+        $query->freeResult();
+        return $data;
+    }
+
 }

@@ -115,6 +115,32 @@ class Validation
                     'required' => '角色id不能为空'
                 ],
             ]
+        ],
+        'addAdmin'=>[
+            'rules'=>[
+                'role_id'=>"required",
+                'a_name'=>"required",
+                'real_name'=>"required",
+                'status'=>"required",
+                'a_id'=>'required',
+            ],
+            'errors'=>[
+                'role_id' => [
+                    'required' => '角色id不能为空'
+                ],
+                'a_name' => [
+                    'required' => '登录名不能为空'
+                ],
+                'real_name' => [
+                    'required' => '用户昵称不能为空'
+                ],
+                'status' => [
+                    'required' => '启用状态不能为空'
+                ],
+                'a_id' => [
+                    'required' => '用户id不能为空'
+                ],
+            ]
         ]
     ];
 

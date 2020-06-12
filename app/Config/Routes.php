@@ -63,7 +63,12 @@ $routes->group("admin",function ($routes){
        $routers->add('add',"admin\StaffController::add");
        $routers->add('edit/(:num)',"admin\StaffController::edit");
        $routers->add('delete',"admin\StaffController::delete");
-       $routers->add('adminStatus',"admin\StaffController::adminStatus");
+       $routers->add('staffStatus',"admin\StaffController::staffStatus");
+    });
+
+    $routes->group("setting",function ($routes){
+        $routes->add("index","admin\SettingController::index");
+        $routes->add("update","admin\SettingController::update");
     });
 });
 

@@ -36,7 +36,7 @@ class Aci extends BaseConfig
                 ],
             ],
         ],
-        'manage' =>[
+        'staff' =>[
             'version' => '1',
             'charset' => 'utf-8',
             'lastUpdate' => '2017-07-28 20:10:10',
@@ -79,7 +79,7 @@ class Aci extends BaseConfig
                     [
                         'folder' => 'admin',
                         'controller' => 'staff',
-                        'method' => 'status',
+                        'method' => 'staffStatus',
                         'caption' => '用户状态',
                     ],
                     [
@@ -92,11 +92,11 @@ class Aci extends BaseConfig
                         'folder' => 'admin',
                         'controller' => 'staff',
                         'method' => 'profile',
-                        'caption' => '修改个人资料',
+                        'caption' => '个人资料',
                     ],
                 ]
         ],
-        'Menu' =>[
+        'menu' =>[
             'version' => '1',
             'charset' => 'utf-8',
             'lastUpdate' => '2017-07-28 20:10:10',
@@ -181,6 +181,29 @@ class Aci extends BaseConfig
                     'controller' => 'role',
                     'method' => 'access',
                     'caption' => '权限分配'
+                ],
+            ],
+        ],
+        'setting' =>[
+            'version' => '1',
+            'charset' => 'utf-8',
+            'lastUpdate' => '2017-07-28 20:10:10',
+            'moduleName' => 'setting',
+            'modulePath' => 'admin',
+            'moduleCaption' => '设置中心',
+            'description' => '设置中心',
+            'fileList' => NULL,
+            'works' => true,
+            'moduleUrl' => 'admin/setting',
+            'system' => true,
+            'coder' => 'Arrow',
+            'website' => 'http://',
+            'moduleDetails' =>[
+                [
+                    'folder' => 'admin',
+                    'controller' => 'setting',
+                    'method' => 'index',
+                    'caption' => '设置中心',
                 ],
             ],
         ],

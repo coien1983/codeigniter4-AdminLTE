@@ -38,10 +38,14 @@ class StaffController extends AdminController
             return view("admin/staff/index",$this->data);
 
         }catch (\Exception $e){
-            showmessage($e->getMessage(),base_url("admin/manage/logout"));
+            showmessage($e->getMessage());
         }
     }
 
+    /**
+     * @title 添加管理员用户
+     * @return string
+     */
     public function add()
     {
         if ($this->request->isAJAX()) {
@@ -64,7 +68,7 @@ class StaffController extends AdminController
             try{
                 $admin_service = new AdminService();
 
-                $admin_service->addRole($request);
+                $admin_service->addAdmin($request);
 
                 $this->reload_all_cache();
 
@@ -93,6 +97,110 @@ class StaffController extends AdminController
     }
 
     /**
+     * @title 编辑管理用户
+     * @return string
+     */
+    public function edit()
+    {
+        if ($this->request->isAJAX()) {
+
+            $config_arr = config("Validation");
+            $rules = $config_arr->rules['addAdmin']['rules'];
+            $errors = $config_arr->rules['addAdmin']['errors'];
+
+            if(!$this->validate($rules,$errors)){
+
+                //过滤的消息获取一下
+                $err = $this->validator->getErrors();
+                $err = array_values($err);
+
+                jsonMessage(false,$err[0]);
+            }
+
+            $request = $this->request->getPost();
+
+            try{
+                $admin_service = new AdminService();
+
+                $admin_service->editAdmin($request);
+
+                $this->reload_all_cache();
+
+                jsonMessage(true,"操作成功");
+            }catch (\Exception $e){
+                jsonMessage(false,$e->getMessage());
+            }
+
+        } else {
+
+            $a_id = $this->request->uri->getSegment(4);
+            try{
+                $this->breadcrumbs->unshift(3,"编辑用户","/admin/staff/edit");
+                $breadcrumb = $this->breadcrumbs->show();
+                $this->data['breadcrumb'] = $breadcrumb;
+
+                $admin_service = new AdminService();
+                $this->data['roles'] = $admin_service->getRolesForAdd();
+                $admin = $admin_service->getAdminById($a_id);
+                $admin['status'] = $admin['is_lock'] == 1 ? 0 : 1;
+                $this->data['admin'] = $admin;
+
+                return view("admin/staff/edit",$this->data);
+
+            }catch (\Exception $e){
+
+                showmessage($e->getMessage());
+            }
+        }
+    }
+
+    /**
+     * @title 更改管理用户状态
+     */
+    public function staffStatus()
+    {
+        if ($this->request->isAJAX()) {
+
+            $a_id = $this->request->getPost("a_id");
+
+            try{
+
+                $admin_service = new AdminService();
+                $admin_service->staffStatus($a_id);
+                $this->reload_all_cache();
+
+                jsonMessage(true,"操作成功");
+            }catch (\Exception $e){
+                jsonMessage(false,$e->getMessage());
+            }
+
+        }
+    }
+
+    /**
+     * @title 删除管理用户
+     */
+    public function delete()
+    {
+        if ($this->request->isAJAX()) {
+
+            $a_id = $this->request->getPost("a_id");
+
+            try{
+
+                $admin_service = new AdminService();
+                $admin_service->deleteStaff($a_id);
+                $this->reload_all_cache();
+
+                jsonMessage(true,"操作成功");
+            }catch (\Exception $e){
+                jsonMessage(false,$e->getMessage());
+            }
+
+        }
+    }
+
+    /**
      * @title 个人资料
      * @return string
      */
@@ -113,7 +221,7 @@ class StaffController extends AdminController
             return view("admin/staff/profile",$this->data);
 
         }catch (\Exception $e){
-            showmessage($e->getMessage(),base_url("admin/manage/logout"));
+            showmessage($e->getMessage());
         }
     }
 

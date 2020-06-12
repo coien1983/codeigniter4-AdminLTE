@@ -220,3 +220,48 @@ function getDepth($menu_id)
 
     return 0;
 }
+
+/**
+ * 字符串命名风格转换
+ * type 0 将Java风格转换为C的风格 1 将C风格转换为Java的风格
+ * @param string  $name 字符串
+ * @param integer $type 转换类型
+ * @param bool    $ucfirst 首字母是否大写（驼峰规则）
+ * @return string
+ */
+function parse_name($name, $type = 0, $ucfirst = true)
+{
+    if ($type) {
+        $name = preg_replace_callback('/_([a-zA-Z])/', function ($match) {
+            return strtoupper($match[1]);
+        }, $name);
+
+        return $ucfirst ? ucfirst($name) : lcfirst($name);
+    } else {
+        return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));
+    }
+}
+
+/**
+ * unique_ID
+ * 生成16位以上唯一ID
+ *
+ * @author Aspirant Zhang <admin@aspirantzhang.com>
+ * @param int $length 不含前缀的长度，最小16，建议20+
+ * @param str $prefix 前缀
+ * @return str $id
+ */
+function unique_ID($length = 16,$prefix = '')
+{
+    $id = $prefix;
+    $addLength = $length - 13;
+    $id .= uniqid();
+    if (function_exists('random_bytes')) {
+        $id .= substr(bin2hex(random_bytes(ceil(($addLength) / 2))),0,$addLength);
+    } elseif (function_exists('openssl_random_pseudo_bytes')) {
+        $id .= substr(bin2hex(openssl_random_pseudo_bytes(ceil($addLength / 2))),0,$addLength);
+    } else {
+        $id .= mt_rand(1*pow(10,($addLength)),9*pow(10,($addLength)));
+    }
+    return $id;
+}

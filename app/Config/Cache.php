@@ -13,7 +13,7 @@ class Cache extends BaseConfig
 	| it is not available, the $backupHandler will be used in its place.
 	|
 	*/
-	public $handler = 'file';
+	public $handler = 'redis';
 
 	/*
 	|--------------------------------------------------------------------------

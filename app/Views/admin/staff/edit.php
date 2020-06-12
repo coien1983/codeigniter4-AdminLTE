@@ -3,7 +3,7 @@
 <?php echo $this->include("admin/public/main_sidebar");?>
 <div class="content-wrapper">
     <section class="content-header">
-        <h1>添加用户</h1>
+        <h1>编辑用户</h1>
         <!--        --><?php //echo $pagetitle; ?>
         <?php echo $breadcrumb; ?>
     </section>
@@ -31,7 +31,7 @@
                                 <div class="col-sm-10 col-md-4">
                                     <select name="role_id" id="role" class="form-control">
                                         <?php foreach ($roles as $key=>$value):?>
-                                        <option value="<?php echo $key?>"><?php echo $value?></option>
+                                        <option value="<?php echo $key?>" <?php if($admin['role_id'] == $key) echo "selected";?>><?php echo $value?></option>
                                         <?php endforeach;?>
                                     </select>
 
@@ -44,7 +44,7 @@
                             <div class="form-group">
                                 <label for="nickname" class="col-sm-2 control-label">昵称</label>
                                 <div class="col-sm-10 col-md-4">
-                                    <input maxlength="50" id="real_name" name="real_name" value=""
+                                    <input maxlength="50" id="real_name" name="real_name" value="<?php echo $admin['real_name']?>"
                                            class="form-control" required placeholder="请输入昵称">
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                                 <label for="username" class="col-sm-2 control-label">账号</label>
                                 <div class="col-sm-10 col-md-4">
                                     <input maxlength="50" id="a_name" autocomplete="off" name="a_name"
-                                           value="" class="form-control" required placeholder="请输入账号">
+                                           value="<?php echo $admin['a_name']?>" class="form-control" required placeholder="请输入账号">
                                 </div>
                             </div>
 
@@ -61,7 +61,7 @@
                                 <label for="password" class="col-sm-2 control-label">密码</label>
                                 <div class="col-sm-10 col-md-4">
                                     <input maxlength="255" id="a_password" autocomplete="off" type="password" name="a_password"
-                                           value="" class="form-control" required placeholder="请输入密码">
+                                           value="" class="form-control" required placeholder="请填写登录密码,若不修改请留空">
                                 </div>
                             </div>
 
@@ -100,9 +100,9 @@
                             <div class="col-sm-2">
                             </div>
                             <div class="col-sm-10 col-md-4">
-                                <input type="hidden" name="a_id" value="0">
+                                <input type="hidden" name="a_id" value="<?php echo $admin['a_id']?>">
                                 <div class="btn-group">
-                                    <button type="submit" id="addStaff" class="btn flat btn-info dataFormSubmit">
+                                    <button type="submit" id="editStaff" class="btn flat btn-info dataFormSubmit">
                                         保存
                                     </button>
                                 </div>
@@ -124,9 +124,9 @@
 </div>
 <?php echo $this->include("admin/public/footer")?>
 <script>
-    $(document).on("click","#addStaff",function (e) {
+    $(document).on("click","#editStaff",function (e) {
         e.preventDefault();
-        $("#addStaff").attr("disabled","disabled");
+        $("#editStaff").attr("disabled","disabled");
         var real_name = $("#real_name").val();
         var a_name = $("#a_name").val();
         var a_password = $("#a_password").val();
@@ -135,44 +135,44 @@
         if(real_name == "")
         {
             showMessage("error","用户昵称不能为空","错误");
-            $("#addStaff").removeAttr("disabled");
+            $("#editStaff").removeAttr("disabled");
             return false;
         }
 
         if(a_name == "")
         {
             showMessage("error","登录账号不能为空","错误");
-            $("#addStaff").removeAttr("disabled");
+            $("#editStaff").removeAttr("disabled");
             return false;
         }
 
-        if(a_password == "" || a_password != password)
+        if(a_password != "" && a_password != password)
         {
-            showMessage("error","请填写登录密码，确认密码请保持一致","错误");
-            $("#addStaff").removeAttr("disabled");
+            showMessage("error","确认密码请保持一致","错误");
+            $("#editStaff").removeAttr("disabled");
             return false;
         }
 
         $.ajax({
-            url:"/admin/staff/add",
+            url:"/admin/staff/edit/0",
             type:"POST",
             data:$("form").serialize(),
             dataType:"JSON",
             success:function(data){
 
                 if(data.status){
-                    showMessage("success","用户添加成功","成功");
+                    showMessage("success","用户编辑成功","成功");
 
                     GoUrl("/admin/staff/index",1);
                 }else{
                     showMessage("error",data.message,"失败");
-                    $("#addStaff").removeAttr("disabled");
+                    $("#editStaff").removeAttr("disabled");
                     return false;
                 }
 
             },error:function(e){
-                showMessage("error", "用户添加失败","失败");
-                $("#addStaff").removeAttr("disabled");
+                showMessage("error", "用户编辑失败","失败");
+                $("#editStaff").removeAttr("disabled");
                 return false;
             }
         })

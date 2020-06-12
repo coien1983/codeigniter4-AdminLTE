@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Libraries\FieldForm;
 use App\Libraries\Tree;
 use App\Models\AdminModel;
 
@@ -826,5 +827,252 @@ class AdminService extends BaseService
         $admin_model = new AdminModel();
         $roles = $admin_model->getAllRoles(1);
         return $roles;
+    }
+
+    /**
+     * @title 根据id查询用户
+     * @param $a_id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getAdminById($a_id)
+    {
+        $admin_model = new AdminModel();
+        $where = [
+            'a_id'=>$a_id
+        ];
+        $admin = $admin_model->findByWhere("admin",$where);
+
+        if(empty($admin))
+        {
+            throw new \Exception("用户不存在",100007);
+        }
+
+        return $admin;
+    }
+
+    /**
+     * @title 添加管理员用户
+     * @param $request
+     * @return bool
+     * @throws \Exception
+     */
+    public function addAdmin($request)
+    {
+        if($request['password'] == "" || $request['password'] != $request['a_password'])
+        {
+            throw new \Exception("登录密码为空，或确认密码不一致",100007);
+        }
+        $admin_model = new AdminModel();
+        $where = [
+            'a_name'=>$request['a_name']
+        ];
+
+        $admin = $admin_model->findByWhere("admin",$where);
+
+        if(!empty($admin))
+        {
+            throw new \Exception("同名账号已经存在",100007);
+        }
+
+        $encrypt = random_string('alnum',5);
+
+        $password = md5(md5($request['password'].$encrypt));
+
+        $is_lock = $request['status'] == 1 ? 0 : 1;
+
+        $data = [
+            'a_serial'=>random_string('alnum',30),
+            'a_name'=>$request['a_name'],
+            'real_name'=>$request['real_name'],
+            'role_id'=>$request['role_id'],
+            'a_password'=>$password,
+            'is_lock'=>$is_lock,
+            'encrypt'=>$encrypt,
+            'created_at'=>time(),
+            'updated_at'=>time()
+        ];
+
+        $res = $admin_model->addDataForAutoInc('admin',$data);
+
+        if(!$res)
+        {
+            throw new \Exception("操作失败",100007);
+        }
+
+        return true;
+    }
+
+    /**
+     * @title 编辑管理员
+     * @param $request
+     * @return bool
+     * @throws \Exception
+     */
+    public function editAdmin($request)
+    {
+        if($request['password'] != "")
+        {
+            if($request['password'] != $request['a_password'])
+            {
+                throw new \Exception("密码不一致",100007);
+            }
+        }
+        $admin_model = new AdminModel();
+
+        $where = [
+            'a_id'=>$request['a_id']
+        ];
+
+        $admin = $admin_model->findByWhere("admin",$where);
+        if(empty($admin))
+        {
+            throw new \Exception("管理用户不存在",100007);
+        }
+
+        $where = [
+            'a_name'=>$request['a_name'],
+            'a_id !='=>$request['a_id']
+        ];
+
+        $check_admin = $admin_model->findByWhere("admin",$where);
+
+        if(!empty($check_admin))
+        {
+            throw new \Exception("同名账号已经存在",100007);
+        }
+
+        $encrypt = $admin['encrypt'];
+
+        $password = md5(md5($request['password'].$encrypt));
+
+        $is_lock = $request['status'] == 1 ? 0 : 1;
+
+        $data = [
+            'a_name'=>$request['a_name'],
+            'real_name'=>$request['real_name'],
+            'role_id'=>$request['role_id'],
+            'a_password'=>$password,
+            'is_lock'=>$is_lock,
+            'updated_at'=>time()
+        ];
+
+        $where = [
+            'a_id'=>$request['a_id']
+        ];
+        $res = $admin_model->resetDataByWhere('admin',$data,$where);
+
+        if(!$res)
+        {
+            throw new \Exception("操作失败",100007);
+        }
+
+        return true;
+    }
+
+    /**
+     * @title 删除管理用户
+     * @param $a_id
+     * @return bool
+     * @throws \Exception
+     */
+    public function deleteStaff($a_id)
+    {
+        $admin_model = new AdminModel();
+        $where = [
+            'a_id'=>$a_id
+        ];
+
+        $admin = $admin_model->findByWhere("admin",$where);
+        if(empty($admin))
+        {
+            throw new \Exception("管理用户不存在",100007);
+        }
+
+        $res = $admin_model->deleteByWhere('admin',$where);
+
+        if(!$res)
+        {
+            throw new \Exception("操作失败",100007);
+        }
+
+        return true;
+
+    }
+
+    /**
+     * @title 更改管理状态
+     * @param $a_id
+     * @return bool
+     * @throws \Exception
+     */
+    public function staffStatus($a_id)
+    {
+        $admin_model = new AdminModel();
+        $where = [
+            'a_id'=>$a_id
+        ];
+
+        $admin = $admin_model->findByWhere("admin",$where);
+        if(empty($admin))
+        {
+            throw new \Exception("管理用户不存在",100007);
+        }
+
+        if($admin['is_lock'] == 1)
+        {
+            $data = [
+                'is_lock'=>0,
+                'updated_at'=>time()
+            ];
+        }else{
+            $data = [
+                'is_lock'=>1,
+                'updated_at'=>time()
+            ];
+        }
+
+        $res = $admin_model->resetDataByWhere("admin",$data,$where);
+
+        if(!$res)
+        {
+            throw new \Exception("操作失败",100007);
+        }
+
+        return true;
+    }
+
+    /**
+     * @title 获取系统设置
+     * @return array
+     */
+    public function adminSetting()
+    {
+        $admin_model = new AdminModel();
+
+        $data = $admin_model->adminSetting();
+
+//        echo "<pre>";
+//        print_r($data);
+//        exit();
+
+        $field_form = new FieldForm();
+
+        foreach ($data as &$value)
+        {
+            $value['content'] = json_decode($value['content'],true);
+            $content_new = [];
+
+            foreach ($value['content'] as $kk => $content) {
+
+                $content['form'] = $field_form->getFieldForm($content['type'], $content['name'], $content['field'], $content['content'], $content['option']);
+
+                $content_new[] = $content;
+            }
+
+            $value['content'] = $content_new;
+        }
+
+        return $data;
     }
 }

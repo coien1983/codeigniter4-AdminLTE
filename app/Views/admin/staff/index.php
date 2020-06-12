@@ -88,16 +88,16 @@
                                                 <i class="fa fa-pencil"></i>
                                             </a>
 
-                                            <a class="btn btn-danger btn-xs deleteRole" title="删除" data-id="<?php echo $value['role_id']?>" >
+                                            <a class="btn btn-danger btn-xs deleteStaff" title="删除" data-id="<?php echo $value['a_id']?>" >
                                                 <i class="fa fa-trash"></i>
                                             </a>
 
                                             <?php if($value['is_lock'] == 1):?>
-                                                <a class="btn btn-warning btn-xs roleStatus" title="启用" data-id="<?php echo $value['a_id']?>" data-status="<?php echo $value['is_lock']?>">
+                                                <a class="btn btn-warning btn-xs staffStatus" title="启用" data-id="<?php echo $value['a_id']?>" data-status="<?php echo $value['is_lock']?>">
                                                     <i class="fa fa-circle"></i>
                                                 </a>
                                             <?php else:?>
-                                                <a class="btn btn-success btn-xs roleStatus" title="禁用" data-id="<?php echo $value['a_id']?>" data-status="<?php echo $value['is_lock']?>" >
+                                                <a class="btn btn-success btn-xs staffStatus" title="禁用" data-id="<?php echo $value['a_id']?>" data-status="<?php echo $value['is_lock']?>" >
                                                     <i class="fa fa-circle"></i>
                                                 </a>
                                             <?php endif;?>
@@ -141,4 +141,67 @@
         var per_page = obj.value;
         window.location.href = "/admin/staff/index?keyword="+keywords+"&per_page="+per_page
     }
+</script>
+<script>
+    $(document).on("click",".deleteStaff",function (e) {
+        var a_id = $(this).attr("data-id");
+        layer.confirm("确定要删除当前管理用户?", {title: "提示", closeBtn: 1, icon: 3}, function () {
+            $.ajax({
+                url:"/admin/staff/delete",
+                type:"POST",
+                data:{a_id:a_id},
+                dataType:"JSON",
+                success:function(data){
+
+                    if(data.status){
+                        showMessage("success","操作成功","成功");
+
+                        GoUrl("/admin/staff/index",1);
+                    }else{
+                        showMessage("error",data.message,"失败");
+
+                        return false;
+                    }
+
+                },error:function(e){
+                    showMessage("error", "操作失败","失败");
+                    return false;
+                }
+            })
+        });
+    })
+
+    //用户状态
+    $(document).on("click",".staffStatus",function (e) {
+        var a_id = $(this).attr("data-id");
+        var status = $(this).attr("data-status");
+        var message = "确定要启用当前管理用户?";
+        if(status == 0){
+            message = "确定要禁用当前管理用户?"
+        }
+        layer.confirm(message, {title: "提示", closeBtn: 1, icon: 3}, function () {
+            $.ajax({
+                url:"/admin/staff/staffStatus",
+                type:"POST",
+                data:{a_id:a_id},
+                dataType:"JSON",
+                success:function(data){
+
+                    if(data.status){
+                        showMessage("success","操作成功","成功");
+
+                        GoUrl("/admin/staff/index",1);
+                    }else{
+                        showMessage("error",data.message,"失败");
+
+                        return false;
+                    }
+
+                },error:function(e){
+                    showMessage("error", "操作失败","失败");
+                    return false;
+                }
+            })
+        });
+    })
 </script>
