@@ -32,6 +32,41 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+$routes->group("admin",function ($routes){
+
+    $routes->add("index/index","admin\IndexController::index");
+
+    $routes->group("manage",function ($routes){
+        $routes->add("login","admin\ManageController::login");
+    });
+
+    $routes->group("role",function ($routes){
+        $routes->add("index","admin\RoleController::index");
+        $routes->add("add","admin\RoleController::add");
+        $routes->add("edit/(:num)","admin\RoleController::edit");
+        $routes->add("delete","admin\RoleController::delete");
+        $routes->add("roleStatus","admin\RoleController::roleStatus");
+        $routes->add("access/(:num)","admin\RoleController::access");
+    });
+
+    $routes->group("menu",function ($routes){
+        $routes->add("index","admin\MenuController::index");
+        $routes->add("edit/(:num)","admin\MenuController::edit");
+        $routes->add("add/(:num)","admin\MenuController::add");
+        $routes->add("delete/(:num)","admin\MenuController::delete");
+    });
+
+    $routes->group("staff",function ($routers){
+       $routers->add("profile","admin\StaffController::profile");
+       $routers->add("index","admin\StaffController::index");
+       $routers->add('logout',"admin\StaffController::logout");
+       $routers->add('add',"admin\StaffController::add");
+       $routers->add('edit/(:num)',"admin\StaffController::edit");
+       $routers->add('delete',"admin\StaffController::delete");
+       $routers->add('adminStatus',"admin\StaffController::adminStatus");
+    });
+});
+
 /**
  * --------------------------------------------------------------------
  * Additional Routing
