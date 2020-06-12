@@ -1,0 +1,18 @@
+CRITICAL - 2020-06-12 07:32:37 --> 
+#0 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/system/HTTP/RedirectResponse.php(92): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidRedirectRoute('')
+#1 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/system/Common.php(798): CodeIgniter\HTTP\RedirectResponse->route(false)
+#2 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/app/Controllers/admin/ManageController.php(54): redirect('http://ci4admin...')
+#3 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/system/CodeIgniter.php(910): App\Controllers\admin\ManageController->login()
+#4 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/system/CodeIgniter.php(398): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\admin\ManageController))
+#5 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/system/CodeIgniter.php(306): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/public/index.php(45): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2020-06-12 07:32:49 --> 
+#0 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/system/HTTP/RedirectResponse.php(92): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidRedirectRoute('')
+#1 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/system/Common.php(798): CodeIgniter\HTTP\RedirectResponse->route(false)
+#2 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/app/Controllers/admin/ManageController.php(54): redirect('http://ci4admin...')
+#3 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/system/CodeIgniter.php(910): App\Controllers\admin\ManageController->login()
+#4 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/system/CodeIgniter.php(398): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\admin\ManageController))
+#5 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/system/CodeIgniter.php(306): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /Users/jinxingle/Documents/code/github_project/codeigniter4-AdminLTE/public/index.php(45): CodeIgniter\CodeIgniter->run()
+#7 {main}

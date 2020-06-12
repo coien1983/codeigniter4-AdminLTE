@@ -209,20 +209,38 @@ class StaffController extends AdminController
 
         $admin_service =  new AdminService();
 
-        try{
-            $this->breadcrumbs->unshift(3,"个人资料","/admin/staff/profile");
+        if($this->request->isAJAX())
+        {
+            try{
 
-            $breadcrumb = $this->breadcrumbs->show();
-            $admin = $admin_service->getStaffInfo();
+                $request = $this->request->getPost();
+                $admin_service->editProfile($request);
 
-            $this->data['breadcrumb'] = $breadcrumb;
-            $this->data['admin'] = $admin;
+                jsonMessage(true,"操作成功");
 
-            return view("admin/staff/profile",$this->data);
+            }catch (\Exception $e){
+               jsonMessage(false,$e->getMessage());
+            }
 
-        }catch (\Exception $e){
-            showmessage($e->getMessage());
+        }else{
+            try{
+
+                $this->breadcrumbs->unshift(3,"个人资料","/admin/staff/profile");
+
+                $breadcrumb = $this->breadcrumbs->show();
+                $admin = $admin_service->getStaffInfo();
+
+                $this->data['breadcrumb'] = $breadcrumb;
+                $this->data['admin'] = $admin;
+                $this->data['roles'] = $admin_service->getRolesForAdd(0);
+
+                return view("admin/staff/profile",$this->data);
+
+            }catch (\Exception $e){
+                showmessage($e->getMessage());
+            }
         }
+
     }
 
     /**

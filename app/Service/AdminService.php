@@ -48,7 +48,8 @@ class AdminService extends BaseService
         $data = [
             'a_id'=>$admin['a_id'],
             'a_name'=>$admin['a_name'],
-            'role_id'=>$admin['role_id']
+            'role_id'=>$admin['role_id'],
+            'real_name'=>$admin['real_name']
         ];
         session()->set($data);
 
@@ -277,6 +278,10 @@ class AdminService extends BaseService
      */
     public function deleteMenu($menu_id)
     {
+        if($menu_id == 1)
+        {
+            throw new \Exception("首页面板禁止删除",100007);
+        }
         $admin_model = new AdminModel();
         $where = [
             'menu_id'=>$menu_id
@@ -822,10 +827,10 @@ class AdminService extends BaseService
      * @title 获取所有有效角色
      * @return array
      */
-    public function getRolesForAdd()
+    public function getRolesForAdd($status = 1)
     {
         $admin_model = new AdminModel();
-        $roles = $admin_model->getAllRoles(1);
+        $roles = $admin_model->getAllRoles($status);
         return $roles;
     }
 
@@ -1074,5 +1079,84 @@ class AdminService extends BaseService
         }
 
         return $data;
+    }
+
+    /**
+     * @title 更改用户信息
+     * @param $request
+     * @return bool
+     * @throws \Exception
+     */
+    public function editProfile($request)
+    {
+        $a_id = session("a_id");
+        $admin_model = new AdminModel();
+        $where = [
+            'a_id'=>$a_id
+        ];
+        $admin = $admin_model->findByWhere('admin',$where);
+        if(empty($admin))
+        {
+            throw new \Exception("管理用户不存在",100007);
+        }
+
+        if($admin['is_lock'] == 1)
+        {
+            throw new \Exception("管理用户被锁定",100007);
+        }
+
+        if($request['type'] == 1)
+        {
+            $data = [
+                'real_name'=>$request['real_name'],
+                'updated_at'=>time()
+            ];
+
+            $res = $admin_model->resetDataByWhere('admin',$data,['a_id'=>$a_id]);
+
+            if(!$res)
+            {
+                throw new \Exception("操作失败",100007);
+            }
+
+            session()->set('real_name',$request['real_name']);
+
+            return true;
+        }else{
+
+            if(empty($request['password']) || empty($request['new_password']) || empty($request['renew_password']))
+            {
+                throw new \Exception("参数有误",100007);
+            }
+
+            if($request['new_password'] != $request['renew_password'])
+            {
+                throw new \Exception("新密码和确认密码不一致",100007);
+            }
+
+            $password = md5(md5(trim($request['password']) . $admin['encrypt']));
+
+            if($password != $admin['a_password'])
+            {
+                throw new \Exception("用户密码有误",100007);
+            }
+
+            $new_password = md5(md5(trim($request['new_password']) . $admin['encrypt']));
+
+            $data = [
+                'a_password'=>$new_password,
+                'updated_at'=>time()
+            ];
+
+            $res = $admin_model->resetDataByWhere('admin',$data,['a_id'=>$a_id]);
+
+            if(!$res)
+            {
+                throw new \Exception("操作失败",100007);
+            }
+
+            return true;
+
+        }
     }
 }

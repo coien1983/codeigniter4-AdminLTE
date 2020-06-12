@@ -5,7 +5,7 @@
                 <img src="/upload/avatar/m_001.png" class="img-circle" alt="用户头像">
             </div>
             <div class="pull-left info">
-                <p><?php echo session("a_name")?></p>
+                <p><?php echo session("real_name")?></p>
                 <a><i class="fa fa-circle text-success"></i> 在线</a>
             </div>
         </div>

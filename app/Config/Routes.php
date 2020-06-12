@@ -32,7 +32,10 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+
 $routes->group("admin",function ($routes){
+
+    $routes->add("index","admin\ManageController::login");
 
     $routes->add("index/index","admin\IndexController::index");
 

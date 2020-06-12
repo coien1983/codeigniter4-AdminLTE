@@ -35,7 +35,7 @@
                                 </li><!-- end message -->
                             </ul>
                         </li>
-                        <li class="footer"><a href="#"><?php echo lang('header_view_all'); ?></a></li>
+                        <li class="footer"><a href="#"></a></li>
                     </ul>
                 </li>
 
@@ -43,16 +43,16 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="/upload/avatar/m_001.png" class="user-image" alt="User Image">
-                        <span class="hidden-xs"><?php echo session("a_name"); ?></span>
+                        <span class="hidden-xs"><?php echo session("real_name"); ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header">
                             <img src="/upload/avatar/m_001.png" class="img-circle" alt="User Image">
-                            <p><?php echo session("a_name");?><small>2020-06-18</small></p>
+                            <p><?php echo session("real_name");?><small>2020-06-18</small></p>
                         </li>
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="/admin/staff/index" class="btn btn-default btn-flat">个人信息</a>
+                                <a href="/admin/staff/profile" class="btn btn-default btn-flat">个人信息</a>
                             </div>
                             <div class="pull-right">
                                 <a href="/admin/staff/logout" class="btn btn-default btn-flat">退出登录</a>
