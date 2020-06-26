@@ -4,7 +4,9 @@ class Home extends BaseController
 {
 	public function index()
 	{
-		return view('welcome_message');
+	    session()->set("test",1123);
+
+	    echo session()->get("test");
 	}
 
 	//--------------------------------------------------------------------

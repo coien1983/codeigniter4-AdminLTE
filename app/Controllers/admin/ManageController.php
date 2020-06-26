@@ -51,7 +51,7 @@ class ManageController extends Controller
 
             if(session("a_id"))
             {
-                redirect(base_url("admin/staff/profile"));
+                header("Location:".base_url("admin/staff/profile"));
             }else if(get_cookie("a_serial")){
 
                 try{
@@ -59,7 +59,7 @@ class ManageController extends Controller
                     $a_serial = get_cookie("a_serial");
                     $admin_service->reloadAdmin($a_serial);
 
-                    redirect(base_url("admin/staff/profile"));
+                    header("Location:".base_url("admin/staff/profile"));
 
                 }catch (\Exception $e){
                     showmessage($e->getMessage(),base_url("admin/manage/login"));
