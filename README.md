@@ -57,9 +57,15 @@ location / {
 #### 访问后台
 访问`/admin/index`，默认超级管理员的账号密码都为`codeigniter4`。
 
+#### 后台权限路由添加方式
+访问目录文件`/app/Config/Aci.php`，
+将需要添加的路由加到对应的module下，添加后台菜单的时候，就可以找到对应路由。
 
 ## 其他说明
 本项目采用大量的开源代码，包括CodeIgniter4，AdminLTE等等。
 部分代码可能署名已被某些前辈去掉，我也没来得及去查找具体的作者。
 在此，对所有用到的开源代码作者表示由衷的感谢。
 关于CodeIgniter4,中文文档请移步至https://codeigniter.org.cn/
+
+## 20200930版本更新
+新闻模块集成，使用bootstrap-fileinput组件，wangEditor组件，集成图片上传七牛云。

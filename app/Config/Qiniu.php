@@ -2,10 +2,15 @@
 namespace Config;
 use CodeIgniter\Config\BaseConfig;
 
+/**
+ * 七牛配置中心
+ * Class Qiniu
+ * @package Config
+ */
 class Qiniu extends BaseConfig
 {
-    public $accessKey = "9J4Jys9QjS2zzDi6xFRGPeEuTbJi-bFRTlGs9F1u";
-    public $secretKey = "qpvn9LpjzElctagzCPHwYWEuDkSJWZjkAIoI6cdE";
-    public $bucket = "cxh365";
-    public $domainUrl = "https://images.cxh365.com";
+    public $accessKey = "";
+    public $secretKey = "";
+    public $bucket = "";
+    public $domainUrl = "";
 }

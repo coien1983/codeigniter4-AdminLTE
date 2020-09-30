@@ -191,4 +191,17 @@ BEGIN;
 INSERT INTO `attachment` VALUES (10, 0, 0, '5ee360d10903bc9e.jpeg', '/Users/codeigniter4-AdminLTE//public/upload/attachment/20200612/', '/upload/attachment/20200612/5ee360d10903bc9e.jpeg', 'jpeg', 'image/jpeg', 22629, 1591959761, 0, 0);
 COMMIT;
 
+DROP TABLE IF EXISTS `credit_news`;
+
+CREATE TABLE `credit_news` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '标题',
+  `c_image` varchar(255) NOT NULL DEFAULT '' COMMENT '封面',
+  `desc` varchar(100) NOT NULL DEFAULT '' COMMENT '简介',
+  `content` text NOT NULL,
+  `created_at` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='信用新闻';
+
 SET FOREIGN_KEY_CHECKS = 1;

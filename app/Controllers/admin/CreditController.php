@@ -8,7 +8,7 @@ use App\Service\TicketService;
 use CodeIgniter\Controller;
 
 /**
- * @title 支付信用控制器
+ *
  * Class CreditController
  * @package App\Controllers\admin
  */
@@ -17,50 +17,7 @@ class CreditController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->breadcrumbs->unshift(2,"贴现数据","/admin/credit/lists");
-    }
-
-    /**
-     * @title 贴现汇数据中心
-     * @return string
-     */
-    public function lists()
-    {
-        $breadcrumb = $this->breadcrumbs->show();
-        $credit_service =  new CreditService();
-
-        $request = $this->request->getGet();
-
-
-        try{
-            $data = $credit_service->getCreditList($request);
-
-            $this->data['breadcrumb'] = $breadcrumb;
-            $this->data['data'] = $data;
-
-            return view("admin/credit/lists",$this->data);
-
-        }catch (\Exception $e){
-            showmessage($e->getMessage());
-        }
-    }
-
-    /**
-     * @title 支付信用审核
-     */
-    public function creditStatus()
-    {
-        try{
-
-            $request = $this->request->getPost();
-            $user_service = new CreditService();
-            $user_service->creditStatus($request);
-
-            jsonMessage(true,"操作成功");
-
-        }catch (\Exception $e){
-            jsonMessage(false,$e->getMessage());
-        }
+        $this->breadcrumbs->unshift(2,"新闻中心","/admin/credit/news");
     }
 
     /**
@@ -71,7 +28,7 @@ class CreditController extends AdminController
     {
         try{
 
-            $this->breadcrumbs->unshift(3,"新闻资讯","/admin/credit/news");
+            $this->breadcrumbs->unshift(3,"新闻中心","/admin/credit/news");
             $breadcrumb = $this->breadcrumbs->show();
             $this->data['breadcrumb'] = $breadcrumb;
 

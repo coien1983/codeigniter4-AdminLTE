@@ -73,6 +73,17 @@ $routes->group("admin",function ($routes){
         $routes->add("index","admin\SettingController::index");
         $routes->add("update","admin\SettingController::update");
     });
+
+    $routes->group("credit",function ($routes){
+        $routes->add("news","admin\CreditController::news");
+        $routes->add("addNews","admin\CreditController::addNews");
+        $routes->add("editNews","admin\CreditController::editNews");
+        $routes->add("deleteNews","admin\CreditController::deleteNews");
+    });
+
+    $routes->group("utils",function ($routes){
+        $routes->add("imgUpload","admin\UtilsController::imgUpload");
+    });
 });
 
 /**

@@ -10,5 +10,6 @@ class BaseService
         helper('session');
         helper('text');
         helper("url");
+        helper("utils");
     }
 }

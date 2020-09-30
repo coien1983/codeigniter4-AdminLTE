@@ -141,6 +141,32 @@ class Validation
                     'required' => '用户id不能为空'
                 ],
             ]
+        ],
+        'addNews'=>[
+            'rules'=>[
+                'id'=>"required",
+                'title'=>"required",
+                'c_image'=>"required",
+                'desc'=>"required",
+                'content'=>"required",
+            ],
+            'errors'=>[
+                'id' => [
+                    'required' => '新闻id不能为空'
+                ],
+                'title' => [
+                    'required' => '新闻标题不能为空',
+                ],
+                'c_image' => [
+                    'required' => '新闻封面不能为空',
+                ],
+                'desc' => [
+                    'required' => '新闻简介不能为空',
+                ],
+                'content' => [
+                    'required' => '新闻内容不能为空',
+                ],
+            ]
         ]
     ];
 

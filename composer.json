@@ -11,7 +11,8 @@
         "ext-json": "*",
         "kint-php/kint": "^3.3",
         "psr/log": "^1.1",
-        "laminas/laminas-escaper": "^2.6"
+        "laminas/laminas-escaper": "^2.6",
+        "qiniu/php-sdk": "^7.3"
     },
     "require-dev": {
         "codeigniter4/codeigniter4-standard": "^1.0",
@@ -27,8 +28,7 @@
     "scripts": {
         "post-update-cmd": [
             "@composer dump-autoload",
-            "CodeIgniter\\ComposerScripts::postUpdate",
-            "bash admin/setup.sh"
+            "CodeIgniter\\ComposerScripts::postUpdate"
         ]
     },
     "support": {

@@ -207,6 +207,72 @@ class Aci extends BaseConfig
                 ],
             ],
         ],
+
+        'utils' =>[
+            'version' => '1',
+            'charset' => 'utf-8',
+            'lastUpdate' => '2017-07-28 20:10:10',
+            'moduleName' => 'utils',
+            'modulePath' => 'admin',
+            'moduleCaption' => '插件中心',
+            'description' => '插件中心',
+            'fileList' => NULL,
+            'works' => true,
+            'moduleUrl' => 'admin/utils',
+            'system' => true,
+            'coder' => 'Arrow',
+            'website' => 'http://',
+            'moduleDetails' =>[
+                [
+                    'folder' => 'admin',
+                    'controller' => 'utils',
+                    'method' => 'imgUpload',
+                    'caption' => '图片上传',
+                ],
+            ],
+        ],
+
+        'credit' =>[
+            'version' => '1',
+            'charset' => 'utf-8',
+            'lastUpdate' => '2017-07-28 20:10:10',
+            'moduleName' => 'credit',
+            'modulePath' => 'admin',
+            'moduleCaption' => '新闻中心',
+            'description' => '新闻中心',
+            'fileList' => NULL,
+            'works' => true,
+            'moduleUrl' => 'admin/credit',
+            'system' => true,
+            'coder' => 'Arrow',
+            'website' => 'http://',
+            'moduleDetails' =>[
+                [
+                    'folder' => 'admin',
+                    'controller' => 'credit',
+                    'method' => 'news',
+                    'caption' => '新闻资讯',
+                ],
+                [
+                    'folder' => 'admin',
+                    'controller' => 'credit',
+                    'method' => 'addNews',
+                    'caption' => '添加新闻',
+                ],
+                [
+                    'folder' => 'admin',
+                    'controller' => 'credit',
+                    'method' => 'editNews',
+                    'caption' => '编辑新闻',
+                ],
+                [
+                    'folder' => 'admin',
+                    'controller' => 'credit',
+                    'method' => 'deleteNews',
+                    'caption' => '删除新闻',
+                ],
+            ],
+        ],
     ];
 }
 
