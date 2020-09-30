@@ -160,7 +160,7 @@
     editor2.customConfig.uploadImgHooks = {
         customInsert: function (insertImg, result, editor) {
             console.log(JSON.stringify(result))
-            if (data.status) {
+            if (result.status) {
                 insertImg(result.data)
             } else {
                 showMessage("error", res.message, "失败");
@@ -177,7 +177,7 @@
     // }
     // editor2.customConfig.uploadImgParamsWithUrl = true
     editor2.create()
-    editor2.txt.html("<?php echo $news['content']?>")
+    editor2.txt.html('<?php echo $news["content"]?>')
 
     $(document).on("click", "#editNews", function (e) {
         e.preventDefault();
